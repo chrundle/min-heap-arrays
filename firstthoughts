@@ -1,0 +1,100 @@
+#include <array>
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class minHeap {
+    private:    
+    int ** heap ;
+    
+    public:
+    /* constructor */
+    minHeap (int n) {
+        /* allocate memory for outer arrays */
+        heap = (int **) malloc (n * sizeof(int [2])) ;
+        
+        /* allocate memory for inner arrays */
+        for (int i = 0; i < n; i++) {
+            heap [i] = (int*) malloc (2 * sizeof(int)) ;    
+        }
+    }
+    
+    /* destructor */
+    ~ minHeap () {
+        free (*heap) ;
+        free (heap) ;
+    }
+    
+    /* functions */
+    void push (int arr [2], int n) {
+        heap [n][0] = arr [0] ;
+        heap [n][1] = arr [1] ;
+    }
+    
+    int first (int n) {
+        return heap [n][0] ;
+    }
+    
+    int second (int n) {
+        return heap [n][1] ;
+    }
+};
+
+
+int main() {
+    int i;
+    minHeap arr (2) ;
+    
+    int t [2], u [2] ;
+    t [0] = 2 ;
+    t [1] = 5 ;
+    u [0] = 11 ;
+    u [1] = 123 ;
+    
+    
+    arr.push(t, 0) ;
+    
+    arr.push(u, 1) ;
+    
+    cout << arr.first(0) << " " << arr.second(0) << endl ;
+    cout << arr.first(1) << " " << arr.second(1) << endl ;
+    
+    return 0;                   // exit program
+}
+
+/* Idea using priority_queue
+
+int main() {
+    int N;
+    cin >> N;
+    int t, v;
+    priority_queue< int, vector< int>, greater< int>> Q;
+    set< int> S;
+    while (N-- > 0) {
+        cin >> t;
+        if (t == 1) { // add to heap
+            cin >> v;
+            if (S.count(v) > 0) { // element was deleted
+                S.erase(v); // undelete
+            }
+            else
+                Q.push(v);
+        }
+        else if (t == 2) { // delete element
+            cin >> v;
+            S.insert(v);
+        }
+        else { // print min in heap
+            while (S.count(Q.top()) > 0) { // reject deleted elements
+                S.erase(Q.top());
+                Q.pop();
+            }
+            cout << Q.top() << endl;
+        }
+    }
+    return 0;
+}
+*/
